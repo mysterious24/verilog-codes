@@ -1,0 +1,108 @@
+module xorgate (a,b,c);
+  input a,b;
+  output c;
+  
+  wire      abar, bbar, t1, t2;
+  not invA (abar, a);
+  not invB (bbar, b);
+  and and1 (t1, a, bbar);
+  and and2 (t2, b, abar);
+  or  or1 (c, t1, t2);
+
+
+endmodule
+
+// Code your testbench here
+// or browse Examples
+module xorgate_tb;
+  reg t_a,t_b;
+  wire t_c;
+  xorgate xorg( .a(t_a), .b(t_b), .c(t_c) );
+  initial
+    begin
+       $dumpfile("dump.vcd");
+  		$dumpvars(1);
+    end
+
+  
+  initial
+    begin
+      $monitor($time,"  ",t_a,t_b," output= ", t_c);
+      
+      //bit #1
+      t_a = 1'b0;
+      t_b = 1'b0;
+      
+      #1
+      //bit #2
+      t_a = 1'b1;
+      t_b = 1'b0;
+      
+      #1
+      //bit #3
+      t_a = 1'b1;
+      t_b = 1'b1;
+      
+      #1
+      //bit #4
+      t_a = 1'b0;
+      t_b = 1'b0;
+      
+      #1
+      //bit #5
+      t_a = 1'b0;
+      t_b = 1'b0;
+      
+      #3
+      t_a = 1'b1;
+      t_b = 1'b0;
+      
+      #2
+      t_a = 1'b1;
+      t_b = 1'b1;
+      
+      #2
+      t_a = 1'b0;
+      t_b = 1'b0;
+      
+      #2
+      t_a = 1'b1;
+      t_b = 1'b1;
+      
+            
+      #1
+      t_a = 1'b1;
+      t_b = 1'b0;
+      
+      #1
+      t_a = 1'b0;
+      t_b = 1'b1;
+      
+      #1
+      t_a = 1'b1;
+      t_b = 1'b0;
+      
+      #1
+      t_a = 1'b0;
+      t_b = 1'b1;
+      
+      #1
+      t_a = 1'b1;
+      t_b = 1'b0;
+      
+      #1
+      t_a = 1'b0;
+      t_b = 1'b1;
+      
+      #1
+      t_a = 1'b1;
+      t_b = 1'b0;
+      
+      #1
+      t_a = 1'b0;
+      t_b = 1'b1;
+      
+      #5
+      $display("the code is working!!");
+    end
+endmodule
