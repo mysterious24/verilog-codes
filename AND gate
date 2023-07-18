@@ -1,1 +1,38 @@
+// data flow modeeling style 
+module AND_2_data_flow (output Y, input A, B);
+assign Y = A & B; 
+endmodule
 
+// behavioural model
+module AND_2_behavioral (output reg Y, input A, B);
+always @ (A or B) begin
+    if (A == 1'b1 & B == 1'b1) begin
+        Y = 1'b1;
+    end
+    else 
+        Y = 1'b0; 
+end
+endmodule
+
+//gate level
+module AND_2(output Y, input A, B);
+and(Y, A, B);
+endmodule;
+
+// common test bench
+module AND_2_behavioral_tb;
+reg A, B;
+wire Y;
+AND_2_behavioral DUT (Y, A, B);
+initial begin
+    A = 0; B = 0;
+ #1 A = 0; B = 1;
+ #1 A = 1; B = 0;
+ #1 A = 1; B = 1;
+end
+initial begin
+    $monitor ("%t | A = %d| B = %d| Y = %d", $time, A, B, Y); // for monitor very changes in the input and the output 
+    $dumpfile("dump.vcd"); //use this line only using an additional web or online compillers 
+    $dumpvars();//same as the previous code for producing the timing diagram.
+end
+endmodule
